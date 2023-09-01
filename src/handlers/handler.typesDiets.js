@@ -8,7 +8,7 @@ const typeDiets = async(req,res)=>{
         let response = await Diets.findAll();
         
         // ********************   SI NO EXISTEN DIETAS EN LA BD   ********************  
-        if (response.length === 0){
+        if (response.length < 11){
             const arrayDiets = await typesDietsFuntion() // llamamos a la función
             arrayDiets.forEach(async(ele)=>{
                 await Diets.create({
