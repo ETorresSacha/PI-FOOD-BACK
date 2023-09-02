@@ -22,8 +22,13 @@ const { Op } = require("sequelize");
         const minusculaname= name.toLowerCase()
 
         // ********************     API     ********************
+        try {
             responseApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${minusculaname}&number=100&addRecipeInformation=true`);
             responseApi = responseApi.data.results;
+        } catch (error) {
+            error.message;
+        }
+            
 
         // ********************     BD     ********************
             responseBD = await Recipe.findAll({
@@ -39,9 +44,14 @@ const { Op } = require("sequelize");
 
     else{
         // ********************     API     ********************
+        try {
             responseApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=100&addRecipeInformation=true`);
-            
+           
             responseApi= await responseApi.data.results
+            
+        } catch (error) {
+            error.message;
+        }
 
 
         // ********************     BD     ********************
@@ -72,8 +82,8 @@ const { Op } = require("sequelize");
   
   //! ********************     MODIFICANDO LOS DATOS     ********************
         // ********************     API     ********************
-        
-    let dataApi=responseApi.map(ele=>{   
+        let dataApi=[]
+    if(responseApi!==undefined){   dataApi=responseApi.map(ele=>{   
         let datosIngredientes=[]
         let datosequipment=[]
         const retornarData ={
@@ -98,7 +108,8 @@ const { Op } = require("sequelize");
             diets:ele?.diets,
         }
         return retornarData
-    })
+    })}
+    else dataApi
 
 
         // ********************     BD     ********************
