@@ -8,8 +8,8 @@ const recipeNames = async(req,res)=>{
         // ********************     NAME     ********************
         if(name){
            const data=await recipeNameAll(name)
-           return data.length!==0 ? res.status(200).json(data) 
-           : res.status(404).json({error:"No recipe found with that description, please try another."})
+           return res.status(200).json(data) 
+
         }
         
         // ********************     ALL     ********************
